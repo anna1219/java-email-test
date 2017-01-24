@@ -14,24 +14,30 @@ public class MailClient {
 
     private MailHelper mailHelper;
 
+    private String emailServerHost;
+    private String emailServerPort;
     private String fromEmail;
     private String password;
 
     @Autowired
     public MailClient(MailHelper mailHelper,
                       @Value("${from.email.address}") String fromEmail,
-                      @Value("${from.email.password}") String password) {
+                      @Value("${from.email.password}") String password,
+                      @Value("${email.server.host}") String emailServerHost,
+                      @Value("${email.server.port}") String emailServerPort) {
         this.mailHelper = mailHelper;
         this.fromEmail = fromEmail;
         this.password = password;
+        this.emailServerHost = emailServerHost;
+        this.emailServerPort = emailServerPort;
     }
 
     public void sendEmail(String toEmail) {
         System.out.println("TLSEmail Start");
 
         Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.host", emailServerHost);
+        props.put("mail.smtp.port", emailServerPort);
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
 

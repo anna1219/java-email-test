@@ -16,8 +16,8 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @PostConstruct
-    private void sendMail() {
-        mailClient.sendEmail("any toEmail here");
-    }
+//    @PostConstruct
+//    private void sendMail() {
+//        mailClient.sendEmail("any toEmail here");
+//    }
 }

@@ -21,6 +21,8 @@ public class MailClientTest {
     public static final String FROM_EMAIL = "fromEmail";
     public static final String PASSWORD = "password";
     public static final String TO_EMAIL = "toEmail";
+    public static final String EMAIL_SERVER_HOST = "url";
+    public static final String EMAIL_SERVER_PORT = "port";
 
     @Mock
     private MailHelper mailHelper;
@@ -29,7 +31,7 @@ public class MailClientTest {
 
     @Before
     public void setUp() {
-        mailClient = new MailClient(mailHelper, FROM_EMAIL, PASSWORD);
+        mailClient = new MailClient(mailHelper, FROM_EMAIL, PASSWORD, EMAIL_SERVER_HOST, EMAIL_SERVER_PORT);
     }
 
     @Test
@@ -40,6 +42,8 @@ public class MailClientTest {
         verify(mailHelper).sendMail(eq(TO_EMAIL), argument.capture());
         Session actualSession = argument.getValue();
         assertThat(actualSession, is(notNullValue()));
+        assertThat(actualSession.getProperty("mail.smtp.host"), is(EMAIL_SERVER_HOST));
+        assertThat(actualSession.getProperty("mail.smtp.port"), is(EMAIL_SERVER_PORT));
     }
 
 }
